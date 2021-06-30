@@ -16,8 +16,8 @@ jobs:
         if: github.event.inputs.version != 'patch' ||
           github.event.inputs.version != 'minor' ||
           github.event.inputs.version != 'major'
-        run: echo "::error The version bump argument was not valid. Value should be 'patch', 'minor' or 'major'." && exit 1
-      
+        run: echo "::error The version bump argument was not valid. Value should be 'patch', 'minor' or 'major' when the value received was ${{ github.event.inputs.version }}." && exit 1
+
       - uses: actions/checkout@v2
       - name: Set up Python
         uses: actions/setup-python@v2
