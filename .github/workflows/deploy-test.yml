@@ -13,7 +13,7 @@ jobs:
     environment: Test PyPI
     steps:
       - name: Check version bump type
-        if: contains(['patch', 'minor', 'major'], github.event.inputs.version) == false
+        if: ${{ contains(['patch', 'minor', 'major'], github.event.inputs.version) == false }}
         run: echo "::error The version bump argument was not valid. Value should be 'patch', 'minor' or 'major' when the value received was ${{ github.event.inputs.version }}." && exit 1
 
       - uses: actions/checkout@v2
@@ -22,7 +22,7 @@ jobs:
         with:
           python-version: "2.7"
       - name: "Update pypirc"
-        env:
+        env:  
           PYPI_ACCESS_TOKEN: ${{ secrets.PYPI_ACCESS_TOKEN }}
         run: |
           echo -e "[pypi]" >> ~/.pypirc
