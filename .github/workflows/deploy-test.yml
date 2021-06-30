@@ -13,9 +13,9 @@ jobs:
     environment: Test PyPI
     steps:
       - name: Incorrect version bump type
-        if: github.event.inputs.version != 'patch' ||
-          github.event.inputs.version != 'minor' ||
-          github.event.inputs.version != 'major'
+        if: github.event.inputs.version != patch ||
+          github.event.inputs.version != minor ||
+          github.event.inputs.version != major
         run: echo "::error The version bump argument was not valid. Value should be 'patch', 'minor' or 'major' when the value received was ${{ github.event.inputs.version }}." && exit 1
 
       - uses: actions/checkout@v2
