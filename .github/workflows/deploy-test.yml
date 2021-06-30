@@ -12,6 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     environment: Test PyPI
     steps:
+      - name: Incorrect version bump type
+        if: github.event.inputs.version != 'patch' ||
+          github.event.inputs.version != 'minor' ||
+          github.event.inputs.version != 'major'
+        run: echo "::error The version bump argument was not valid. Value should be 'patch', 'minor' or 'major'." && exit 1
+      
       - uses: actions/checkout@v2
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -42,11 +48,6 @@ jobs:
       - name: Bump version (MAJOR)
         if: github.event.inputs.version == 'major'
         run: bin/bumpversion --breaking --no-input
-      - name: Incorrect version bump
-        if: github.event.inputs.version != 'patch' ||
-          github.event.inputs.version != 'minor' ||
-          github.event.inputs.version != 'major'
-        run: echo "::error The version bump argument was not valid. Value should be 'patch', 'minor' or 'major'." && exit 1
 
       - name: Pre-release
         run: |
